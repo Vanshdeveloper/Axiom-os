@@ -80,7 +80,7 @@ If you see the error `Could not find Chrome`, it means Puppeteer was unable to l
 
 Axiom uses a **Decoupled Nitro Architecture** for high-performance automation.
 
-1. **Intelligence Tier**: Google Gemini 1.5 Flash (v1beta) for structured JSON synthesis.
+1. **Intelligence Tier**: Google Gemini 2.5 Flash (v1beta) for structured JSON synthesis.
 2. **Data Tier**: Notion SDK integration for persistent structured storage.
 3. **Agent Tier**: Background polling workers for reminders and scheduled reports.
 4. **Proxy Tier**: Node.js/Express server securing all private API keys.
