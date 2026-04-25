@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Axiom OS - Dashboard</title>
+    <link rel="stylesheet" href="app-style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="index.html" class="logo">Axiom OS</a>
+        <div class="header-right">
+            <div class="notion-status">
+                <span class="status-dot"></span>
+                Notion: Connected
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        <!-- Input Section -->
+        <section class="input-section">
+            <div class="input-wrapper">
+                <textarea class="input-textarea" id="topic-input" aria-label="Enter study topic for note generation"
+                    placeholder="What do you want to revise? (e.g., Rotational Motion formulas...)"></textarea>
+            </div>
+
+            <!-- Persona Selector [NEW] -->
+            <div class="persona-selector">
+                <input type="radio" name="persona" id="student" value="student">
+                <label for="student">🎓 Student</label>
+                
+                <input type="radio" name="persona" id="professor" value="professor" checked>
+                <label for="professor">👨‍🏫 Professor</label>
+            </div>
+
+            <button class="forge-button" onclick="const topic=document.getElementById('topic-input').value; const persona=document.querySelector('input[name=\'persona\']:checked').value; generateNotesFromUI(topic, persona)" aria-label="Generate study notes from topic input" id="forge-button">
+                Forge Notes ✨
+            </button>
+        </section>
+
+        <!-- 
+    DOCUMENT PREVIEW CLASSES REFERENCE:
+    ================================
+    Use these classes to place AI-generated content in the correct locations:
+
+    SECTION CLASSES:
+    .document-preview        - Main container for the entire document preview
+    .document-header        - Contains breadcrumbs and title
+    .document-title         - The main title of the document (h1)
+    .breadcrumbs            - Navigation breadcrumbs (e.g., Drafts > Chemistry > Organic)
+    .document-content       - Wrapper for all content sections
+    .content-grid           - Grid layout for content sections
+
+    SECTION BLOCK CLASSES:
+    .section-block          - Individual content section wrapper
+    .full-width             - Full width section (spans entire grid)
+    .section-header         - Header area of a section
+    .section-icon            - Icon placeholder for section
+    .section-title          - Title of the section (h2)
+    .section-text           - Paragraph/text content area
+    .section-text p         - Individual paragraphs inside section
+
+    TABLE CLASSES:
+    .conditions-table       - Table for displaying conditions/reactions data
+    IMPORTANT: Add data attributes to tables:
+    - data-content-type="table" - Identifies this div as a table
+    - data-table-name="[descriptive-name]" - Custom name for the table
+    - data-table-purpose="[what data it contains]" - Purpose of the table
+
+    CALLOUT CLASSES:
+    .protip-callout         - Special tip/pro note callout box
+    .protip-label           - Label for the pro tip
+    .protip-text            - Text content of the pro tip
+
+    EXAMPLE USAGE:
+    <table class="conditions-table" data-content-type="table" data-table-name="reaction-conditions" data-table-purpose="Lists reaction conditions like solvent, temperature, metal, time">
+-->
+
+        <div id="pdf-preview-div" role="main" aria-live="polite" aria-label="Document preview area - notes will appear here when generated">
+            <p style="text-align: center; color: var(--accent-primary); font-family: 'Space Grotesk', sans-serif; opacity: 0.6; margin-top: 40px;">Your magic notes will appear here... ✨</p>
+        </div>
+
+
+        <!-- ------------ Example table ------------ -->
+        <!-- <section class="document-preview">
+            <div class="document-header">
+                <div class="breadcrumbs">
+                    Drafts <span>/</span> Chemistry <span>/</span> Organic
+                </div>
+                <h1 class="document-title">Organic Chemistry: Wurtz Reaction</h1>
+            </div>
+            <div class="document-content">
+                <div class="content-grid">
+
+                    <div class="full-width section-block">
+                        <div class="section-header">
+                            <div class="section-icon"></div>
+                            <h2 class="section-title">Mechanism Overview</h2>
+                        </div>
+                        <div class="section-text">
+                            <p>The Wurtz reaction is a coupling reaction used in organic chemistry to synthesize
+                                symmetrical alkanes from alkyl halides. It involves the reaction of two equivalent of an
+                                alkyl halide with sodium metal in dry ether solution.</p>
+                            <p><strong>General Reaction:</strong> 2R-X + 2Na → R-R + 2NaX</p>
+                        </div>
+                    </div>
+
+                    <div class="full-width section-block">
+                        <div class="section-header">
+                            <div class="section-icon"></div>
+                            <h2 class="section-title">Reaction Conditions</h2>
+                        </div>
+                        <div class="table-wrapper">
+                            <table class="conditions-table" data-content-type="table" data-table-name="reaction-conditions"
+                                data-table-purpose="Lists reaction conditions like solvent, temperature, metal, time">
+                                <thead>
+                                    <tr>
+                                        <th>Parameter</th>
+                                        <th>Condition</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Solvent</td>
+                                        <td>Dry Ether</td>
+                                        <td>Must be absolutely dry to prevent side reactions</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Temperature</td>
+                                        <td>Reflux</td>
+                                        <td>Reaction is exothermic, controlled heating required</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Metal</td>
+                                        <td>Sodium (Na)</td>
+                                        <td>Fresh sodium pieces for best reactivity</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Time</td>
+                                        <td>2-4 hours</td>
+                                        <td>Depending on substrate concentration</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="full-width section-block">
+                        <div class="protip-callout">
+                            <div class="protip-label">
+                                💡 Pro Tip
+                            </div>
+                            <p class="protip-text">
+                                <strong>Short Trick:</strong> Remember WURTZ - <strong>W</strong>hen <strong>U</strong>
+                                <strong>R</strong>eacted <strong>T</strong>ogether, <strong>Z</strong>eigh (alkene)!
+                                Actually, the Wurtz reaction works best with primary alkyl halides. Secondary and
+                                tertiary halides tend to undergo elimination reactions instead.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+
+    </main>
+
+
+
+    <!-- Bottom Action Bar -->
+    <footer id="footer-action-bar">
+        <button class="action-btn primary" onclick="window.saveToNotion()" id="notion-btn" aria-label="Save current notes to your Axiom OS library database (Notion)">Save to Axiom OS ☁️</button>
+        <button class="action-btn secondary" onclick="downloadPDF()" id="download-btn" aria-label="Download notes as printable PDF">Download PDF</button>
+    </footer>
+
+    <!-- Notification Container -->
+    <div id="notification-container">
+        <!-- Notifications will be added here dynamically -->
+    </div>
+</body>
+
+<script src="app.js"></script>
+
+</html>

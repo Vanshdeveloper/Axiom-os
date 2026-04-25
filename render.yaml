@@ -1,0 +1,28 @@
+# Axiom OS — Render Blueprint Configuration
+# ---------------------------------------------------------
+# This file enables "One-Click" deployment on Render.com.
+# To use: In Render, click "New +" -> "Blueprint" and 
+# connect this repository.
+# ---------------------------------------------------------
+
+services:
+  - type: web
+    name: axiom-os
+    runtime: docker
+    plan: free # Change to 'starter' if you need more power
+    envVars:
+      # Axiom OS Core Keys (Render will prompt you for these)
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: NOTION_API_KEY
+        sync: false
+      - key: DATABASE_ID
+        sync: false
+      - key: BACKLOG_DB_ID
+        sync: false
+      - key: FINANCE_DB_ID
+        sync: false
+      - key: HABITS_DB_ID
+        sync: false
